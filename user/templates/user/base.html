@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <link rel="stylesheet" type="text/css" href='{% static "user/base.css" %}'>
+  {% block extra_css %}{% endblock %}
+  
+</head>
+
+<body class="container-fluid">
+  <header>
+      <div id="myMenu" class="menu">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeMenu()">&times;</a>
+      <div class="menu-content">
+					<a href="{% url 'store:index' %}">Main Page</a>
+					<a href="{% url 'store:brands' 'skateboards' %}">Skateboards</a>
+					<a href="{% url 'store:brands' 'decks' %}">Decks</a>
+					<a href="{% url 'store:brands' 'trucks' %}">Trucks</a>
+				</div>
+    </div>
+    <span class='menu-sign' onclick="openMenu()">&#9776;</span>
+    <div class="header-title"><a href="{% url 'store:index' %}">Skateshop</a></div>
+    {% block logout %}
+    {% endblock %}
+  </header>
+  {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+        <div class="message">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+  {% block content %}
+  {% endblock %}
+</body>
+
+<script type='text/javascript'>
+  function openMenu() {
+    document.getElementById("myMenu").style.width = "15%";
+    document.getElementById("myMenu").style.borderRight = "2px solid blue";
+  }
+
+  function closeMenu() {
+    document.getElementById("myMenu").style.width = "0%";
+    document.getElementById("myMenu").style.borderRight = "0";
+  }
+</script>
+</html>

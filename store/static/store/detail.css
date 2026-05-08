@@ -1,0 +1,176 @@
+.content {
+  margin-top: 10px;
+}
+
+.slideshow-wrapper {
+  width: 50vw;
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.slideshow {
+  height: 500px;
+  position: relative;
+  margin: auto;
+}
+
+.slide {
+  height: 100%;
+  display: none;
+}
+
+.slide img {
+  height: 100%;
+  display: block;
+  margin: auto;
+}
+
+.slide-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 16px;
+}
+
+.prev, .next {
+  flex: 0 0 auto;
+  cursor: pointer;
+  padding: 12px 24px;
+  background-color: white;
+  border: none;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.dots {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex: 1 1 auto; 
+  max-width: 200px;
+}
+
+.dot {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background-color: #bbb;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dot.active {
+  background-color: #333;
+}
+
+.content {
+  display: inline-flex;
+}
+
+.product-detail {
+  max-width: 600px;
+  margin: 10px;
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fafafa;
+}
+
+.product-header {
+  margin-bottom: 16px;
+}
+
+.brand-link {
+  font-size: 14px;
+  color: #0073e6;
+  text-decoration: none;
+}
+
+.product-title {
+  font-size: 24px;
+  margin: 4px 0;
+}
+
+.product-style {
+  color: #666;
+  font-size: 16px;
+}
+
+.product-price {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.product-features {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+}
+
+.product-features td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.quantity-section {
+  margin-bottom: 16px;
+}
+
+.quantity-section input {
+  width: 60px;
+  padding: 6px;
+  border-radius: 50px;
+  font-size: 14px;
+	transition: 0.2s ease;
+}
+
+.quantity-section input:hover {
+  border-color: #007bff;
+	outline: none;
+	box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+}
+
+.add-to-cart {
+  background-color: #1d99ff;
+  &:hover {
+    background-color: #1580d7;
+  }
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.submit-section {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  align-items: center;
+}
+
+.wishlist-btn {
+  background-color: transparent;
+  border: 2px solid;
+  border-color: #007bff;
+  padding: 12px;
+  border-radius: 100%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 20px;
+  color: #555;
+}
+
+.wishlist-btn:hover {
+  border-color: #ff0000;
+  color: #e91e63;
+}
+
+.wishlist-btn.active {
+  border-color: palevioletred;
+  color: red;
+}

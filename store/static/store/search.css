@@ -1,0 +1,50 @@
+.search-content {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-row-gap: 100px;
+}
+
+.item {
+  position: relative;
+  height: 350px;  
+  width: 200px;   
+  display: inline-block;
+  margin: 20px;
+}
+
+.item img {
+  width: 100%;
+  height: 80%;
+  object-fit: contain;  
+  object-position: center;  
+}
+
+.item img:hover{
+  transform: scale(1.025);
+}
+
+.itemlink:hover {
+    text-decoration: underline;
+}
+
+.itemlink {
+  text-decoration: none;
+  color: black;
+}
+
+.itemname {
+  color: black;
+  text-align: center;
+}
+
+.pagination {
+  text-align: center;
+}
+
+.page-link-left {
+  text-decoration: none;
+}
+
+.page-link-left span {
+  text-decoration: underline;
+}

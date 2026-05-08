@@ -1,0 +1,98 @@
+{% extends 'user/base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'user/index.css' %}">
+{% endblock %}
+
+{% block logout %}
+<div class="logout-button">
+	<form action="{% url 'user:logout' %}" method="post">
+		{% csrf_token %}
+		<button type="submit">Logout</button>
+	</form>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<div class="dashboard">
+
+	<div class="dashboard-left">
+
+		<div class="card cart-card">
+			<h2>Your Cart</h2>
+
+			{% if cart_items %}
+				<ul>
+					{% for item in cart_items|slice:":3" %}
+						<li>
+							<span>
+								{{ item.item.name }}
+								(x{{ item.quantity }})
+							</span>
+
+							<span>{{ item.price }}</span>
+						</li>
+					{% endfor %}
+				</ul>
+
+				<a href="{% url 'cart:detail' %}" class="btn">Go to cart</a>
+
+			{% else %}
+				<p class="empty">Your cart is empty</p>
+			{% endif %}
+		</div>
+
+	</div>
+
+
+	<div class="dashboard-right">
+
+		<div class="card">
+			<h2>Favorites</h2>
+
+			<div class="favorites-grid">
+
+				{% for item in favorite_skateboards|slice:":4" %}
+					{% with img=item.original_item.attachments.all|first %}
+						<a class="favorite-item" href="{% url 'store:detail' brand_type=item.original_item.brand_type brand_name=item.original_item.brand_name item_name=item.original_item.name %}">
+							{% if img %}
+								<img src="{{ img.image.url }}">
+							{% endif %}
+							<span>{{ item.original_item.name }}</span>
+						</a>
+					{% endwith %}
+				{% endfor %}
+
+				{% for item in favorite_decks|slice:":4" %}
+					{% with img=item.original_item.attachments.all|first %}
+						<a class="favorite-item" href="{% url 'store:detail' brand_type=item.original_item.brand_type brand_name=item.original_item.brand_name item_name=item.original_item.name %}">
+							{% if img %}
+								<img src="{{ img.image.url }}">
+							{% endif %}
+							<span>{{ item.original_item.name }}</span>
+						</a>
+					{% endwith %}
+				{% endfor %}
+
+				{% for item in favorite_trucks|slice:":4" %}
+					{% with img=item.original_item.attachments.all|first %}
+						<a class="favorite-item" href="{% url 'store:detail' brand_type=item.original_item.brand_type brand_name=item.original_item.brand_name item_name=item.original_item.name %}">
+							{% if img %}
+								<img src="{{ img.image.url }}">
+							{% endif %}
+							<span>{{ item.original_item.name }}</span>
+						</a>
+					{% endwith %}
+				{% endfor %}
+
+			</div>
+		</div>
+
+	</div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'user/base.html' %}
+
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'user/check_mail.css' %}">
+{% endblock %}
+
+{% block content %} 
+<h1>Check Your Email</h1>
+<p> We've sent you an email. Please check the console, where the app is running, for the activation link. You have 1 day to activate your account.</p>
+{% endblock %}

@@ -1,0 +1,43 @@
+.brand {
+  position: relative;
+  height: 150px;
+  width: 150px;
+  display: inline-block;
+  margin: 20px;
+}
+
+.brand img {
+  width: 100%;
+  height: 100%;
+  border: 2px solid lightgray;
+}
+
+.brand img:hover{
+  border: 2px solid black;
+}
+
+.brands-content {
+  position: relative; 
+  max-width: 100vw;
+  margin: 2px;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  text-align: center;
+
+}
+
+.brand-link:hover {
+    text-decoration: underline;
+}
+
+.brand-link {
+  text-decoration: none;
+  color: black;
+}
+
+
+.brand-name {
+  color: black;
+  text-align: center;
+}

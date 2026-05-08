@@ -1,0 +1,63 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'store/index.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<p class="intro">
+	Hello, this is <a href="https://github.com/sevy-sl">sevy_sl</a>'s demo online skateshop project, made only for demonstration.
+</p>
+
+<div class="products">
+
+	<section class="product-section">
+		<a href="skateboards" class="section-title">Complete Skateboards</a>
+
+		<div class="product-grid">
+			{% for brand in random_skate %}
+				<a href="skateboards/{{ brand.name }}/" class="product-card">
+					<img src="{{ brand.image.url }}" alt="{{ brand.name }}" class="product-image">
+					<h3 class="product-name">{{ brand.name }}</h3>
+				</a>
+			{% empty %}
+				<p>No items available</p>
+			{% endfor %}
+		</div>
+	</section>
+
+	<section class="product-section">
+		<a href="decks" class="section-title">Decks</a>
+
+		<div class="product-grid">
+			{% for brand in random_deck %}
+				<a href="decks/{{ brand.name }}/" class="product-card">
+					<img src="{{ brand.image.url }}" alt="{{ brand.name }}" class="product-image">
+					<h3 class="product-name">{{ brand.name }}</h3>
+				</a>
+			{% empty %}
+				<p>No items available</p>
+			{% endfor %}
+		</div>
+	</section>
+
+	<section class="product-section">
+		<a href="trucks" class="section-title">Trucks</a>
+
+		<div class="product-grid">
+			{% for brand in random_truck %}
+				<a href="trucks/{{ brand.name }}/" class="product-card">
+					<img src="{{ brand.image.url }}" alt="{{ brand.name }}" class="product-image">
+					<h3 class="product-name">{{ brand.name }}</h3>
+				</a>
+			{% empty %}
+				<p>No items available</p>
+			{% endfor %}
+		</div>
+	</section>
+
+</div>
+
+{% endblock %}

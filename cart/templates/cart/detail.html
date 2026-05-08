@@ -1,0 +1,59 @@
+{% extends 'user/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'cart/detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="cart-wrapper">
+	<h2>Your Cart</h2>
+
+	<ul class="cart-items">
+		{% for item in items %}
+			<li class="cart-item">
+				<span class="cart-item-name">
+
+					<a href="{% url 'store:detail' brand_type=item.item.brand_type brand_name=item.item.brand_name item_name=item.item.name %}" class="itemlink">
+						{{ item.item.name }}
+					</a>
+
+					<span class="cart-item-quantity">(x{{ item.quantity }})</span>
+					<form method="post" class="clear-item-form">
+						{% csrf_token %}
+						<input type="hidden" name="item_id" value="{{ item.id }}">
+						<button type="submit" name="clear_item" class="clear-item-btn">
+							(remove)
+						</button>
+					</form>
+				</span>
+
+				<span class="cart-item-price">{{ item.price }}</span>
+			</li>
+		{% empty %}
+			<li class="cart-empty">Your cart is empty.</li>
+		{% endfor %}
+	</ul>
+
+	<div class="cart-total">
+		<span>Total</span>
+		<span>{{ cart.total_price }}</span>
+	</div>
+
+	<div class="cart-actions">
+		<form method="post">
+			{% csrf_token %}
+			<button type="submit" name="clear_cart" class="clear-cart-btn">
+				Clear Cart
+			</button>
+		</form>
+		
+		<form action="{% url 'orders:checkout' %}" method="post">
+			{% csrf_token %}
+			<button type="submit" class="checkout-btn">
+				Checkout
+			</button>
+		</form>
+	</div>
+</div>
+{% endblock %}

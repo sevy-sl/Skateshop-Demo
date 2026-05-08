@@ -1,0 +1,43 @@
+{% extends 'store/base.html' %}
+
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'store/items.css' %}">
+{% endblock %}
+
+{% block content %} 
+<div class='items-content'>
+	{% if items %}
+		<ul class='items-list'>
+		{% for item in items %}
+			{% with item.attachments.all|first as item_image %}
+		        {% if item_image %}
+		            <li class='item'><a href="{{ item.name }}/" class='itemlink'><img src="{{ item_image.image.url }}" alt="{{ item.name }}"><h3 class='itemname'><strong>{{ item.name }}</strong><br><br>${{ item.price }}</h3></a></li>
+		        {% else %}
+		            <p>No image available</p>
+		        {% endif %}
+		    {% endwith %}
+		{% endfor %}
+	</ul>
+	{% else %}
+		<p>No items are available.</p>
+	{% endif %}
+	<div class="pagination">
+		<span class="step-links">
+			{% if items.has_previous %}
+				<a class="page-link-left" href="?page=1"><span>&lt;&lt;</span>&nbsp;</a>
+				<a class="page-link-right" href="?page={{ items.previous_page_number }}">&lt;</a>
+			{% endif %}
+
+			<span class="current">
+				&nbsp;Page {{ items.number }} of {{ items.paginator.num_pages }}&nbsp;
+			</span>
+
+			{% if items.has_next %}
+				<a class="page-link-left" href="?page={{ items.next_page_number }}"><span>&gt;</span>&nbsp;</a>
+				<a class="page-link-right" href="?page={{ items.paginator.num_pages }}">&gt;&gt;&nbsp;</a>
+			{% endif %}
+		</span>
+	</div>
+</div>
+{% endblock %}

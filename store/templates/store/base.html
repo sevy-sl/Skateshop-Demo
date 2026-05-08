@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="{% static 'store/base.css' %}">
+		{% block extra_css %}{% endblock %}
+	</head>
+	<body>
+		<header>
+			<div id="myMenu" class="menu">
+				<a href="javascript:void(0)" class="closebtn" onclick="closeMenu()">&times;</a>
+				<div class="menu-content">
+					<a href="{% url 'store:index' %}">Main Page</a>
+					<a href="{% url 'store:brands' 'skateboards' %}">Skateboards</a>
+					<a href="{% url 'store:brands' 'decks' %}">Decks</a>
+					<a href="{% url 'store:brands' 'trucks' %}">Trucks</a>
+				</div>
+			</div>
+			<span class='menu-sign' onclick="openMenu()">&#9776;</span>
+			<div class="header-title"><a href="{% url 'store:index' %}">Skateshop</a></div>
+			<div class="search-bar">
+				<form method="get" action="{% url 'store:search' %}">
+					<input type="text" name="q" placeholder="Search...">
+				</form>
+			</div>
+			<div class='profile-icon'>
+				<a href="{{ request.scheme }}://{{ request.get_host }}/profile"><img src="{% static 'store/user.png' %}" alt="User"></a>
+			</div>
+		</header>
+		{% if request.resolver_match.url_name != 'index' %}
+			<div class="path">
+				&gt; / <a class="directory" href="{% url 'store:index' %}">Shop</a> &nbsp;/&nbsp; 
+				{% if brand_type %}
+					<a class="directory" href="{% url 'store:brands' brand_type %}">{{ brand_type|capfirst }}</a> &nbsp;/&nbsp;
+				{% endif %}
+				{% if brand_name %}
+					<a class="directory" href="{% url 'store:items' brand_type brand_name %}">{{ brand_name|capfirst }}</a> &nbsp;/&nbsp;
+				{% endif %}
+				{% if item_name %}
+					<a class="directory" href="{% url 'store:detail' brand_type brand_name item_name %}">{{ item_name|capfirst }}</a> &nbsp;/&nbsp;
+				{% endif %}
+			</div>
+		{% endif %}
+		{% block content %}
+		{% endblock %}
+	</body>
+	<script type='text/javascript'>
+		function openMenu() {
+		  document.getElementById("myMenu").style.width = "15%";
+		  document.getElementById("myMenu").style.borderRight = "2px solid blue";
+		}
+
+		function closeMenu() {
+		  document.getElementById("myMenu").style.width = "0%";
+		  document.getElementById("myMenu").style.borderRight = "0";
+		}
+	</script>
+</html>

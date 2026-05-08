@@ -1,0 +1,55 @@
+{% extends 'user/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'orders/checkout.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="checkout-wrapper">
+
+	<h1>Checkout</h1>
+
+	<div class="checkout-container">
+
+		<div class="checkout-items">
+			<h2>Your Items</h2>
+
+			{% for item in items %}
+				<div class="checkout-item">
+					
+					<div class="item-info">
+						{{ item.item.name }}	
+						<span class="quantity">x{{ item.quantity }}</span>
+					</div>
+
+					<div class="item-price">
+						{{ item.price }}
+					</div>
+
+				</div>
+			{% endfor %}
+		</div>
+
+		<div class="checkout-summary">
+
+			<h2>Summary</h2>
+
+			<div class="summary-row">
+				<span>Total</span>
+				<span>{{ cart.total_price }}</span>
+			</div>
+
+			<form action="{% url 'orders:payment'%}"method="post">
+				{% csrf_token %}
+				<button type="submit" class="pay-btn">
+					Pay Now (Fake)
+				</button>
+			</form>
+
+		</div>
+
+	</div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+.items-list {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-row-gap: 100px;
+}
+
+.favorite-items {
+  text-align: center;
+}
+
+.item {
+  position: relative;
+  height: 350px;  
+  width: 200px;   
+  display: inline-block;
+  margin: 20px;
+}
+
+.item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  
+  object-position: center;  
+}
+
+.item img:hover{
+  transform: scale(1.025);
+}
+
+.page-link-left {
+  text-decoration: none;
+}
+
+.page-link-left span {
+  text-decoration: underline;
+}
+.pagination {
+  text-align: center;
+  margin-top: 50px;
+}

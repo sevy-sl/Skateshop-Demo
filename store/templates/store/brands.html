@@ -1,0 +1,20 @@
+{% extends 'store/base.html' %}
+
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'store/brands.css' %}">
+{% endblock %}
+
+{% block content %} 
+<div class='brands-content'>
+	{% if brands %}
+		<ul class='brands'>
+		{% for brand in brands %}
+			<li class='brand'><a href="{{ brand.name }}/" class='brand-link'><img src="{{ brand.image.url }}" alt="{{ brand.name }}"><h3 class='brand-name'>{{ brand.name }}</h3></a></li>
+		{% endfor %}
+		</ul>
+	{% else %}
+		<p>No items are available.</p>
+	{% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'user/base.html' %}
+
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'user/activation_failed.css' %}">
+{% endblock %}
+
+{% block content %} 
+<h1>Activation Link Invalid</h1>
+<p>Sorry, your activation link is invalid or has expired.</p>
+<a href="{% url 'user:register' %}">Register again</a>
+{% endblock %}
+
+
+

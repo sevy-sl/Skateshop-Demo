@@ -1,0 +1,116 @@
+{% extends 'store/base.html' %}
+{% load custom_tags %}
+{% load static %}
+
+{% block extra_css %}
+<link rel='stylesheet' href="{% static 'store/detail.css' %}">
+{% endblock %}
+
+{% block content %} 
+{% if item.attachments.all %}
+	<div class='content'>
+		<div class='slideshow-wrapper'>
+			<div class='slideshow'>
+				{% for item_image in item.attachments.all %}
+					<div class='slide'>
+						<img src='{{ item_image.image.url }}'>
+					</div>
+				{% endfor %}
+			</div>
+			<div class="slide-controls">
+				<button class="prev" onclick="plusSlides(-1)">&#10094;</button>
+			
+				<div class="dots">
+					{% for item_image in item.attachments.all %}
+						<span class="dot" onclick="currentSlide({{ forloop.counter }})"></span>
+					{% endfor %}
+				</div>
+			
+				<button class="next" onclick="plusSlides(1)">&#10095;</button>
+			</div>
+		</div>
+		<div class="product-detail">
+
+			<div class="product-header">
+				<h1 class="product-title">{{ item.name }}</h1>
+				<div class="product-style">{{ item.size }}</div>
+			</div>
+
+			<table class="product-features">
+				<tbody>
+					{% for feature in features %}
+						{% with feature_name=feature|cut:'store.CompleteSkateboard.' %}
+							<tr>
+								{% if item|getattr:feature_name|is_float %}
+									<td><strong>{{ feature_name|capfirst }}</strong> (in.)</td>
+								{% else %}
+									<td><strong>{{ feature_name|capfirst }}</strong></td>
+								{% endif %}
+								<td>{{ item|getattr:feature_name }}</td>
+							</tr>
+						{% endwith %}
+					{% endfor %}
+				</tbody>
+			</table>
+
+			<div class="product-price">
+				<span>${{ item.price }}</span>
+			</div>
+			
+			<div class="submit-section">
+				<form action="{% url 'cart:add' %}" method="post">
+					{% csrf_token %}
+
+					<div class="quantity-section">
+						<label for="quantity">Quantity:</label>
+						<input type="number" id="quantity" name="item_quantity" value="1" min="1">
+					</div>
+
+					<input type="hidden" name="item_type" value="{{ item_type }}">
+					<input type="hidden" name="item_id" value="{{ item.id }}">
+
+					<button type="submit" class="add-to-cart">Add to Cart</button>
+				</form>
+
+				<form action="{% url 'store:favorite_toggle' brand_type brand_name item.name item.id %}" method="post" style="display:inline;">
+					{% csrf_token %}
+					<button type="submit"
+							class="wishlist-btn {% if user in item.favorites.all %}active{% endif %}"
+							aria-label="Add to Wishlist">
+						<span class="heart">&#10084;</span>
+					</button>
+				</form>
+			</div>
+		</div>
+</form>
+
+  	<script>
+  		let slideIndex = 1;
+		showSlides(slideIndex);
+
+		function plusSlides(n) {
+			showSlides(slideIndex += n);
+		}
+
+		function currentSlide(n) {
+			showSlides(slideIndex = n);
+		}
+
+		function showSlides(n) {
+			let i;
+			let slides = document.getElementsByClassName("slide");
+			let dots = document.getElementsByClassName("dot");
+			if (n > slides.length) { slideIndex = 1; }
+			if (n < 1) { slideIndex = slides.length; }
+			for (i = 0; i < slides.length; i++) {
+				slides[i].style.display = "none";
+			}
+			for (i = 0; i < dots.length; i++) {
+				dots[i].className = dots[i].className.replace(" active", "");
+			}
+			slides[slideIndex - 1].style.display = "block";
+			dots[slideIndex - 1].className += " active";
+		}
+  	</script>
+{% endif %}
+{% endblock %}
