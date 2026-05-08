@@ -57,7 +57,9 @@ source venv/bin/activate  # Windows: venv\Scripts\activate
 
 ### 3. Install dependencies
 
-`pip install -r requirements.txt`
+```
+pip install -r requirements.txt
+```
 
 ### 4. Environment variables
 
@@ -70,11 +72,15 @@ DEBUG=True
 
 To create a key:
 
-`python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"`
+```
+python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+```
 
 ### 7. Apply migrations
 
-`python manage.py migrate`
+```
+python manage.py migrate
+```
 
 ### 6. (Optional) Seed database
 
@@ -86,11 +92,15 @@ python seed_trucks.py
 
 ### 7. Create admin user
 
-`python manage.py createsuperuser`
+```
+python manage.py createsuperuser
+```
 
 ### 8. Run server
 
-`python manage.py runserver`
+```
+python manage.py runserver
+```
 
 ---
 
