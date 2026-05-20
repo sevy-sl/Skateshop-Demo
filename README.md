@@ -4,6 +4,18 @@ A Django-based demo project for skateboarding equipment, including complete skat
 
 ---
 
+## Overview
+
+### Default Page
+
+![Default Page](assets/index-page.png)
+
+### Item Page
+
+![Item Page](assets/item-page.png)
+
+---
+
 ## Features
 
 - Product catalog for skateboards, decks and trucks
@@ -51,13 +63,15 @@ cd Skateshop-Demo
 ### 2. Create virtual environment
 
 ```
-python -m venv venv  
+python3 -m venv venv  
 source venv/bin/activate  # Windows: venv\Scripts\activate  
 ```
 
 ### 3. Install dependencies
 
-`pip install -r requirements.txt`
+```
+pip install -r requirements.txt
+```
 
 ### 4. Environment variables
 
@@ -70,27 +84,35 @@ DEBUG=True
 
 To create a key:
 
-`python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"`
+```
+python3 -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+```
 
 ### 7. Apply migrations
 
-`python manage.py migrate`
+```
+python3 manage.py migrate
+```
 
 ### 6. (Optional) Seed database
 
 ```
-python seed_skateboards.py  
-python seed_decks.py  
-python seed_trucks.py  
+python3 seed_skateboards.py  
+python3 seed_decks.py  
+python3 seed_trucks.py  
 ```
 
 ### 7. Create admin user
 
-`python manage.py createsuperuser`
+```
+python3 manage.py createsuperuser
+```
 
 ### 8. Run server
 
-`python manage.py runserver`
+```
+python3 manage.py runserver
+```
 
 ---
 

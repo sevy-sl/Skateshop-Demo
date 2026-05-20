@@ -10,7 +10,7 @@
 	{% for item in items %}
         {% with item.attachments.all|first as item_image %}
         <li class='item'>
-            <a href="{% url 'store:detail' brand_type=item.brand_type brand_name=item.brand_name item_name=item.name %}" class='itemlink'><img src="{{ item_image.image.url }}" alt="{{ item.name }}"><h3 class='itemname'><strong>{{ item.name }}</strong><br><br>${{ item.price }}</h3></a>
+            <a href="{% url 'store:detail' item.brand_type item.parent_brand.slug item.slug %}" class='itemlink'><img src="{{ item_image.image.url }}" alt="{{ item.name }}"><h3 class='itemname'><strong>{{ item.name }}</strong><br><br>${{ item.price }}</h3></a>
         </li>
         {% endwith %}
 	{% endfor %}

@@ -1,6 +1,6 @@
 import random
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse, Http404
+from django.http import Http404
 from django.template import loader
 from .models import SkateboardBrand, DeckBrand, TruckBrand, CompleteSkateboard, Deck, Truck, FavoriteSkateboard, FavoriteDeck, FavoriteTruck
 from django.contrib.auth.decorators import login_required
@@ -26,19 +26,25 @@ favorite_models = {
 }
 
 @login_required(login_url='/profile/login/')
-def favorite_toggle(request, brand_type, brand_name, item_name, item_id):
+def favorite_toggle(request, brand_type, brand_slug, item_slug):
 
 	item_model = items[brand_type]
-	item = get_object_or_404(item_model, id=item_id)
+
+	item = get_object_or_404(
+		item_model,
+		slug=item_slug,
+		parent_brand__slug=brand_slug
+	)
 
 	FavoriteModel = favorite_models[brand_type]
-	fav_obj, created = FavoriteModel.objects.get_or_create(
+
+	favorite, created = FavoriteModel.objects.get_or_create(
 		user=request.user,
 		original_item=item
 	)
 
 	if not created:
-		fav_obj.delete()
+		favorite.delete()
 
 	return redirect(request.META.get('HTTP_REFERER', '/'))
 
@@ -65,32 +71,36 @@ def brands_view(request, brand_type):
     }
     return render(request, 'store/brands.html', context)
 
-def items_view(request, brand_type, brand_name):
-    brand = get_object_or_404(brands[brand_type], name=brand_name) 
+def items_view(request, brand_type, brand_slug):
+    brand = get_object_or_404(brands[brand_type], slug=brand_slug) 
     brand_items = items[brand_type].objects.filter(parent_brand=brand)
     paginator = Paginator(brand_items, 15)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
+        'brand_slug': brand.slug,
+	    'brand_name': brand.name,
         'brand_type': brand_type,
-        'brand_name': brand_name,
         'items': page_obj,
     }
     return render(request, 'store/items.html', context)
 
-def detail_view(request, brand_type, brand_name, item_name):
-    item = get_object_or_404(items[brand_type], name=item_name, parent_brand__name=brand_name)
+def detail_view(request, brand_type, brand_slug, item_slug):
+    brand = get_object_or_404(brands[brand_type], slug=brand_slug) 
+    item = get_object_or_404(items[brand_type], parent_brand__slug=brand_slug, slug=item_slug)
     fields = [
         f.name
         for f in item._meta.fields
-        if f.name not in ['id', 'pdate', 'parent_brand', 'name', 'favorites', 'price']
+        if f.name not in ['slug','id', 'pdate', 'parent_brand', 'name', 'favorites', 'price']
     ]
 
     context = {
         'item': item,
+        'brand_slug': brand.slug,
+        'brand_name': brand.name,
+        'item_slug': item.slug,
+        'item_name': item.name,
         'brand_type': brand_type,
-        'brand_name': brand_name,
-        'item_name': item_name,
         'item_type': brand_type[:-1],
         'features': fields,
     }

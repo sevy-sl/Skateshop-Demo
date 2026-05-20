@@ -8,9 +8,9 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('search/', views.search_view, name='search'),
     path('<str:brand_type>/', views.brands_view, name='brands'),
-    path('<str:brand_type>/<str:brand_name>/', views.items_view, name='items'),
-    path('<str:brand_type>/<str:brand_name>/<str:item_name>/', views.detail_view, name='detail'),
-    path('<str:brand_type>/<str:brand_name>/<str:item_name>/<int:item_id>/favorite/', views.favorite_toggle, name='favorite_toggle'),
+    path('<str:brand_type>/<slug:brand_slug>/', views.items_view, name='items'),
+    path('<str:brand_type>/<slug:brand_slug>/<slug:item_slug>/', views.detail_view, name='detail'),
+    path('<str:brand_type>/<slug:brand_slug>/<slug:item_slug>/favorite/', views.favorite_toggle, name='favorite_toggle'),
 ]
 
 if settings.DEBUG:

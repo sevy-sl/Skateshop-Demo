@@ -14,6 +14,9 @@
 					<a href="{% url 'store:brands' 'skateboards' %}">Skateboards</a>
 					<a href="{% url 'store:brands' 'decks' %}">Decks</a>
 					<a href="{% url 'store:brands' 'trucks' %}">Trucks</a>
+					—
+					<a href="{% url 'user:index' %}">Profile</a>
+					<a href="{% url 'cart:detail' %}">Cart</a>
 				</div>
 			</div>
 			<span class='menu-sign' onclick="openMenu()">&#9776;</span>
@@ -34,10 +37,10 @@
 					<a class="directory" href="{% url 'store:brands' brand_type %}">{{ brand_type|capfirst }}</a> &nbsp;/&nbsp;
 				{% endif %}
 				{% if brand_name %}
-					<a class="directory" href="{% url 'store:items' brand_type brand_name %}">{{ brand_name|capfirst }}</a> &nbsp;/&nbsp;
+					<a class="directory" href="{% url 'store:items' brand_type brand_slug %}">{{ brand_name|capfirst }}</a> &nbsp;/&nbsp;
 				{% endif %}
 				{% if item_name %}
-					<a class="directory" href="{% url 'store:detail' brand_type brand_name item_name %}">{{ item_name|capfirst }}</a> &nbsp;/&nbsp;
+					<a class="directory" href="{% url 'store:detail' brand_type brand_slug item_slug %}">{{ item_name|capfirst }}</a> &nbsp;/&nbsp;
 				{% endif %}
 			</div>
 		{% endif %}

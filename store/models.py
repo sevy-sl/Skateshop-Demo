@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from functools import partial
+from django.utils.text import slugify
+
 
 def attachment_upload_path(instance, filename):
 
@@ -52,7 +54,15 @@ class SkateboardBrand(models.Model):
 	def __str__(self):
 		return self.name
 
-	name = models.CharField(max_length=30, primary_key=True)
+	name = models.CharField(max_length=30, unique=True)
+	slug = models.SlugField(unique=True, blank=True)
+
+	def save(self, *args, **kwargs):
+		if not self.slug:
+			self.slug = slugify(self.name)
+
+		super().save(*args, **kwargs)
+
 	image = models.ImageField(upload_to=upload_to_brand(folder='skateboards'), blank=True, null=True)
 
 class CompleteSkateboard(models.Model):
@@ -66,6 +76,14 @@ class CompleteSkateboard(models.Model):
 	@property
 	def brand_name(self):
 		return self.parent_brand.name
+	
+	slug = models.SlugField(blank=True)
+
+	def save(self, *args, **kwargs):
+		if not self.slug:
+			self.slug = slugify(self.name)
+
+		super().save(*args, **kwargs)
 
 	parent_brand = models.ForeignKey(SkateboardBrand, on_delete=models.CASCADE)
 	pdate = models.DateTimeField('date')
@@ -82,10 +100,11 @@ class CompleteSkateboard(models.Model):
 )
 	
 	class DeckMaterials(models.TextChoices):
-		MAPLE_WOOD = 'Maple Wood'
-		BAMBOO = 'Bamboo'
-		CARBON_FIBER = 'Carbon Fiber'
-		FIBERGLASS = 'Fiberglass'
+		MAPLE_7PLY = '7-Ply Maple'
+		MAPLE_8PLY = '8-Ply Maple'
+		BAMBOO_MAPLE = 'Bamboo / Maple Composite'
+		CARBON_REINFORCED = 'Carbon Reinforced Maple'
+		FIBERGLASS_REINFORCED = 'Fiberglass Reinforced Maple'
 
 	material = models.CharField(choices=DeckMaterials.choices, max_length=30)
 	wheelbase = models.IntegerField(validators=[
@@ -107,9 +126,19 @@ class FavoriteSkateboard(models.Model):
 class DeckBrand(models.Model):
 	def __str__(self):
 		return self.name
+	
+	name = models.CharField(max_length=30, unique=True)
+	slug = models.SlugField(unique=True, blank=True)
 
-	name = models.CharField(max_length=30, primary_key=True)
+	def save(self, *args, **kwargs):
+		if not self.slug:
+			self.slug = slugify(self.name)
+
+		super().save(*args, **kwargs)
+
 	image = models.ImageField(upload_to=upload_to_brand(folder='decks'), blank=True, null=True)
+
+	
 
 class Deck(models.Model):
 	def __str__(self):
@@ -122,6 +151,14 @@ class Deck(models.Model):
 	@property
 	def brand_name(self):
 		return self.parent_brand.name
+	
+	slug = models.SlugField(blank=True)
+
+	def save(self, *args, **kwargs):
+		if not self.slug:
+			self.slug = slugify(self.name)
+
+		super().save(*args, **kwargs)
 
 	parent_brand = models.ForeignKey(DeckBrand, on_delete=models.CASCADE)
 	pdate = models.DateTimeField('date')
@@ -137,10 +174,11 @@ class Deck(models.Model):
 		help_text='Length of the skateboard deck in inches (26.0 to 35.0).')
 	
 	class DeckMaterials(models.TextChoices):
-		MAPLE_WOOD = 'Maple Wood'
-		BAMBOO = 'Bamboo'
-		CARBON_FIBER = 'Carbon Fiber'
-		FIBERGLASS = 'Fiberglass'
+		MAPLE_7PLY = '7-Ply Maple'
+		MAPLE_8PLY = '8-Ply Maple'
+		BAMBOO_MAPLE = 'Bamboo / Maple Composite'
+		CARBON_REINFORCED = 'Carbon Reinforced Maple'
+		FIBERGLASS_REINFORCED = 'Fiberglass Reinforced Maple'
 
 	material = models.CharField(choices=DeckMaterials.choices, max_length=30)
 	wheelbase = models.IntegerField(validators=[
@@ -164,7 +202,15 @@ class TruckBrand(models.Model):
 	def __str__(self):
 		return self.name 
 
-	name = models.CharField(max_length=30, primary_key=True)
+	name = models.CharField(max_length=30, unique=True)
+	slug = models.SlugField(unique=True, blank=True)
+
+	def save(self, *args, **kwargs):
+		if not self.slug:
+			self.slug = slugify(self.name)
+
+		super().save(*args, **kwargs)
+		
 	image = models.ImageField(upload_to=upload_to_brand(folder='trucks'), blank=True, null=True)
 
 class Truck(models.Model):
@@ -178,6 +224,14 @@ class Truck(models.Model):
 	@property
 	def brand_name(self):
 		return self.parent_brand.name
+	
+	slug = models.SlugField(blank=True)
+
+	def save(self, *args, **kwargs):
+		if not self.slug:
+			self.slug = slugify(self.name)
+
+		super().save(*args, **kwargs)
 
 	parent_brand = models.ForeignKey(TruckBrand, on_delete=models.CASCADE)
 	pdate = models.DateTimeField('date')

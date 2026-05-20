@@ -18,7 +18,7 @@
 
 		<div class="product-grid">
 			{% for brand in random_skate %}
-				<a href="skateboards/{{ brand.name }}/" class="product-card">
+				<a href="skateboards/{{ brand.slug }}/" class="product-card">
 					<img src="{{ brand.image.url }}" alt="{{ brand.name }}" class="product-image">
 					<h3 class="product-name">{{ brand.name }}</h3>
 				</a>
@@ -33,7 +33,7 @@
 
 		<div class="product-grid">
 			{% for brand in random_deck %}
-				<a href="decks/{{ brand.name }}/" class="product-card">
+				<a href="decks/{{ brand.slug }}/" class="product-card">
 					<img src="{{ brand.image.url }}" alt="{{ brand.name }}" class="product-image">
 					<h3 class="product-name">{{ brand.name }}</h3>
 				</a>
@@ -48,7 +48,7 @@
 
 		<div class="product-grid">
 			{% for brand in random_truck %}
-				<a href="trucks/{{ brand.name }}/" class="product-card">
+				<a href="trucks/{{ brand.slug }}/" class="product-card">
 					<img src="{{ brand.image.url }}" alt="{{ brand.name }}" class="product-image">
 					<h3 class="product-name">{{ brand.name }}</h3>
 				</a>

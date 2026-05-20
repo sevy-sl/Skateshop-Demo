@@ -11,10 +11,6 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('register/', views.register, name ='register'),
     path('activate/<uidb64>/<token>/', views.activate, name='activate'),
-    path('favorites/skateboards/', views.favorite_skateboards_view, name='favorite_skateboards'),
-    path('favorites/decks/', views.favorite_decks_view, name='favorite_decks'),
-    path('favorites/trucks/', views.favorite_trucks_view, name='favorite_trucks'),
-    path('favorites/', RedirectView.as_view(url='/profile/', permanent=False)),
 ]
 
 if settings.DEBUG:

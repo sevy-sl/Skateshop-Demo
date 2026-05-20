@@ -72,7 +72,7 @@
 					<button type="submit" class="add-to-cart">Add to Cart</button>
 				</form>
 
-				<form action="{% url 'store:favorite_toggle' brand_type brand_name item.name item.id %}" method="post" style="display:inline;">
+				<form action="{% url 'store:favorite_toggle' brand_type brand_slug item_slug %}" method="post" style="display:inline;">
 					{% csrf_token %}
 					<button type="submit"
 							class="wishlist-btn {% if user in item.favorites.all %}active{% endif %}"

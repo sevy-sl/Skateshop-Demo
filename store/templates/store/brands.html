@@ -10,7 +10,7 @@
 	{% if brands %}
 		<ul class='brands'>
 		{% for brand in brands %}
-			<li class='brand'><a href="{{ brand.name }}/" class='brand-link'><img src="{{ brand.image.url }}" alt="{{ brand.name }}"><h3 class='brand-name'>{{ brand.name }}</h3></a></li>
+			<li class='brand'><a href="{{ brand.slug }}/" class='brand-link'><img src="{{ brand.image.url }}" alt="{{ brand.name }}"><h3 class='brand-name'>{{ brand.name }}</h3></a></li>
 		{% endfor %}
 		</ul>
 	{% else %}

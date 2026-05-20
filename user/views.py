@@ -10,8 +10,12 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.http import Http404
+from itertools import chain
+
 
 from cart.models import Cart, CartItem
+from store.models import FavoriteDeck, FavoriteSkateboard, FavoriteTruck
 
 
 def register(request):
@@ -81,44 +85,19 @@ def activate(request, uidb64, token):
 def index(request):
 	cart, _ = Cart.objects.get_or_create(user=request.user)
 
+	favorites = sorted(
+		chain(
+			request.user.favorite_skateboards.through.objects.filter(user=request.user),
+			request.user.favorite_decks.through.objects.filter(user=request.user),
+			request.user.favorite_trucks.through.objects.filter(user=request.user),
+		),
+		key=lambda x: x.created_at,
+		reverse=True
+	)
+
 	context = {
-		'favorite_skateboards': request.user.favorite_skateboards.through.objects.filter(user=request.user).order_by('-created_at')[:5],
-		'favorite_decks': request.user.favorite_decks.through.objects.filter(user=request.user).order_by('-created_at')[:5],
-		'favorite_trucks': request.user.favorite_trucks.through.objects.filter(user=request.user).order_by('-created_at')[:5],
 		'cart_items': cart.items.all(),
+		'favorites': favorites[:8]
 	}
 
 	return render(request, 'user/index.html', context)
-
-
-def favorite_skateboards_view(request):
-	paginator = Paginator(
-		request.user.favorite_skateboards.through.objects.filter(user=request.user).order_by('-created_at'),
-		5
-	)
-
-	page_obj = paginator.get_page(request.GET.get('page'))
-
-	return render(request, 'user/favorites.html', {'favorites': page_obj})
-
-
-def favorite_decks_view(request):
-	paginator = Paginator(
-		request.user.favorite_decks.through.objects.filter(user=request.user).order_by('-created_at'),
-		5
-	)
-
-	page_obj = paginator.get_page(request.GET.get('page'))
-
-	return render(request, 'user/favorites.html', {'favorites': page_obj})
-
-
-def favorite_trucks_view(request):
-	paginator = Paginator(
-		request.user.favorite_trucks.through.objects.filter(user=request.user).order_by('-created_at'),
-		5
-	)
-
-	page_obj = paginator.get_page(request.GET.get('page'))
-
-	return render(request, 'user/favorites.html', {'favorites': page_obj})

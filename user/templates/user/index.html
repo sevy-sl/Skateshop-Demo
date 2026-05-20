@@ -33,7 +33,7 @@
 								(x{{ item.quantity }})
 							</span>
 
-							<span>{{ item.price }}</span>
+							<span>${{ item.price }}</span>
 						</li>
 					{% endfor %}
 				</ul>
@@ -53,42 +53,34 @@
 		<div class="card">
 			<h2>Favorites</h2>
 
-			<div class="favorites-grid">
+			{% if favorites %}
+				<div class="favorites-grid">
 
-				{% for item in favorite_skateboards|slice:":4" %}
-					{% with img=item.original_item.attachments.all|first %}
-						<a class="favorite-item" href="{% url 'store:detail' brand_type=item.original_item.brand_type brand_name=item.original_item.brand_name item_name=item.original_item.name %}">
-							{% if img %}
-								<img src="{{ img.image.url }}">
-							{% endif %}
-							<span>{{ item.original_item.name }}</span>
-						</a>
-					{% endwith %}
-				{% endfor %}
+					{% for favorite in favorites %}
+						{% with item=favorite.original_item %}
+						{% with img=item.attachments.all|first %}
 
-				{% for item in favorite_decks|slice:":4" %}
-					{% with img=item.original_item.attachments.all|first %}
-						<a class="favorite-item" href="{% url 'store:detail' brand_type=item.original_item.brand_type brand_name=item.original_item.brand_name item_name=item.original_item.name %}">
-							{% if img %}
-								<img src="{{ img.image.url }}">
-							{% endif %}
-							<span>{{ item.original_item.name }}</span>
-						</a>
-					{% endwith %}
-				{% endfor %}
+							<a class="favorite-item" href="{% url 'store:detail' item.brand_type item.parent_brand.slug item.slug %}">
 
-				{% for item in favorite_trucks|slice:":4" %}
-					{% with img=item.original_item.attachments.all|first %}
-						<a class="favorite-item" href="{% url 'store:detail' brand_type=item.original_item.brand_type brand_name=item.original_item.brand_name item_name=item.original_item.name %}">
-							{% if img %}
-								<img src="{{ img.image.url }}">
-							{% endif %}
-							<span>{{ item.original_item.name }}</span>
-						</a>
-					{% endwith %}
-				{% endfor %}
+								{% if img %}
+									<img src="{{ img.image.url }}">
+								{% endif %}
 
-			</div>
+								<div class="favorite-info">
+									<span class="favorite-name">
+										{{ item.name }}
+									</span>
+								</div>
+							</a>
+
+						{% endwith %}
+						{% endwith %}
+					{% endfor %}
+
+				</div>
+			{% else %}
+				<p class="empty">No favorites yet</p>
+			{% endif %}
 		</div>
 
 	</div>

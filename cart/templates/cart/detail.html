@@ -14,7 +14,7 @@
 			<li class="cart-item">
 				<span class="cart-item-name">
 
-					<a href="{% url 'store:detail' brand_type=item.item.brand_type brand_name=item.item.brand_name item_name=item.item.name %}" class="itemlink">
+					<a href="{% url 'store:detail' item.item.brand_type item.item.parent_brand.slug item.item.slug %}" class="itemlink">
 						{{ item.item.name }}
 					</a>
 
@@ -28,7 +28,7 @@
 					</form>
 				</span>
 
-				<span class="cart-item-price">{{ item.price }}</span>
+				<span class="cart-item-price">${{ item.price }}</span>
 			</li>
 		{% empty %}
 			<li class="cart-empty">Your cart is empty.</li>
@@ -37,7 +37,7 @@
 
 	<div class="cart-total">
 		<span>Total</span>
-		<span>{{ cart.total_price }}</span>
+		<span>${{ cart.total_price }}</span>
 	</div>
 
 	<div class="cart-actions">

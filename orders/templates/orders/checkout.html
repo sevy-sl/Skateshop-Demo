@@ -24,7 +24,7 @@
 					</div>
 
 					<div class="item-price">
-						{{ item.price }}
+						${{ item.price }}
 					</div>
 
 				</div>
@@ -37,7 +37,7 @@
 
 			<div class="summary-row">
 				<span>Total</span>
-				<span>{{ cart.total_price }}</span>
+				<span>${{ cart.total_price }}</span>
 			</div>
 
 			<form action="{% url 'orders:payment'%}"method="post">
