@@ -7,10 +7,10 @@ app_name = "store"
 urlpatterns = [
     path('', views.index, name='index'),
     path('search/', views.search_view, name='search'),
+    path('favorites/', views.favorite_toggle, name='favorites'),
     path('<str:brand_type>/', views.brands_view, name='brands'),
     path('<str:brand_type>/<slug:brand_slug>/', views.items_view, name='items'),
     path('<str:brand_type>/<slug:brand_slug>/<slug:item_slug>/', views.detail_view, name='detail'),
-    path('<str:brand_type>/<slug:brand_slug>/<slug:item_slug>/favorite/', views.favorite_toggle, name='favorite_toggle'),
 ]
 
 if settings.DEBUG:

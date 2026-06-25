@@ -72,13 +72,16 @@
 					<button type="submit" class="add-to-cart">Add to Cart</button>
 				</form>
 
-				<form action="{% url 'store:favorite_toggle' brand_type brand_slug item_slug %}" method="post" style="display:inline;">
+				<form action="{% url 'store:favorites' %}" method="post" style="display:inline;">
 					{% csrf_token %}
 					<button type="submit"
 							class="wishlist-btn {% if user in item.favorites.all %}active{% endif %}"
 							aria-label="Add to Wishlist">
 						<span class="heart">&#10084;</span>
 					</button>
+					<input type="hidden" name="brand_type" value="{{ brand_type }}">
+					<input type="hidden" name="brand_slug" value="{{ brand_slug }}">
+					<input type="hidden" name="item_slug" value="{{ item_slug }}">
 				</form>
 			</div>
 		</div>

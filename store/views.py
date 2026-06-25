@@ -26,27 +26,33 @@ favorite_models = {
 }
 
 @login_required(login_url='/profile/login/')
-def favorite_toggle(request, brand_type, brand_slug, item_slug):
+def favorite_toggle(request):
+    if request.method != 'POST':
+        return redirect('/')
+    
+    brand_type = request.POST.get('brand_type')
+    brand_slug = request.POST.get('brand_slug')
+    item_slug = request.POST.get('item_slug')
 
-	item_model = items[brand_type]
-
-	item = get_object_or_404(
+    item_model = items[brand_type]
+    
+    item = get_object_or_404(
 		item_model,
 		slug=item_slug,
 		parent_brand__slug=brand_slug
 	)
 
-	FavoriteModel = favorite_models[brand_type]
+    FavoriteModel = favorite_models[brand_type]
 
-	favorite, created = FavoriteModel.objects.get_or_create(
+    favorite, created = FavoriteModel.objects.get_or_create(
 		user=request.user,
 		original_item=item
 	)
 
-	if not created:
-		favorite.delete()
-
-	return redirect(request.META.get('HTTP_REFERER', '/'))
+    if not created:
+        favorite.delete()
+        
+    return redirect(request.META.get('HTTP_REFERER', '/'))
 
 def index(request):
     skateboards = list(SkateboardBrand.objects.all())
