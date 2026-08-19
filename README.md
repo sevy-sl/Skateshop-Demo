@@ -19,7 +19,6 @@ A Django-based demo project for skateboarding equipment, including complete skat
 ## Features
 
 - Product catalog for skateboards, decks and trucks
-- Brand-based browsing system
 - Product detail pages with attributes and images
 - Shopping cart with quantity support
 - Favorite (wishlist) system per user
@@ -36,18 +35,21 @@ A Django-based demo project for skateboarding equipment, including complete skat
 - Python 3
 - Django
 - SQLite
-- HTML, CSS, JavaScript
+- HTML
+- CSS
+- JavaScript
 - Pillow
 
 ---
 
 ## Project Structure
 
-store → products, brands, product logic  
-cart → shopping cart system  
-orders → checkout and order handling  
-user → profile, favorites, user pages  
-seed_assets → images used for database seeding  
+- store/ → products, brands, product models and catalog logic
+- cart/ → shopping cart system
+- orders/ → checkout and order handling
+- user/ → profile, favorites and user pages
+- seed_assets/ → images used for database seeding
+- media/ → uploaded brand and product images
 
 ---
 
@@ -63,8 +65,14 @@ cd Skateshop-Demo
 ### 2. Create virtual environment
 
 ```
-python3 -m venv venv  
-source venv/bin/activate  # Windows: venv\Scripts\activate  
+python3 -m venv venv
+source venv/bin/activate
+```
+
+Windows:
+
+```
+venv\Scripts\activate
 ```
 
 ### 3. Install dependencies
@@ -82,7 +90,7 @@ SECRET_KEY=your-secret-key
 DEBUG=True
 ```
 
-To create a key:
+To generate a secret key:
 
 ```
 python3 -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
@@ -91,16 +99,23 @@ python3 -c "from django.core.management.utils import get_random_secret_key; prin
 ### 5. Apply migrations
 
 ```
+python3 manage.py makemigrations store user cart orders
 python3 manage.py migrate
 ```
 
-### 6. (Optional) Seed database
+### 6. Seed database
+
+The project includes a seed script that creates example brands, products and attachments.
 
 ```
-python3 seed_skateboards.py  
-python3 seed_decks.py  
-python3 seed_trucks.py  
+python3 seed_items.py
 ```
+
+The seed script creates:
+
+- Complete skateboards
+- Decks
+- Trucks
 
 ### 7. Create admin user
 
@@ -131,6 +146,8 @@ No real payment provider is integrated.
 
 ## Notes
 
-- This is a demo project, not production-ready
-- Images are stored locally in `media/`
-- Designed for learning Django architecture
+- This is a demo project and is not production-ready.
+- The checkout/payment system is simulated.
+- Images are stored locally in media/.
+- SQLite is used as the default database.
+- The project is designed for learning Django architecture and model relationships.

@@ -75,7 +75,7 @@
 				<form action="{% url 'store:favorites' %}" method="post" style="display:inline;">
 					{% csrf_token %}
 					<button type="submit"
-							class="wishlist-btn {% if user in item.favorites.all %}active{% endif %}"
+							class="wishlist-btn {% if favorite_item %}active{% endif %}"
 							aria-label="Add to Wishlist">
 						<span class="heart">&#10084;</span>
 					</button>

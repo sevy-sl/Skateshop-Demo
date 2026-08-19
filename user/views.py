@@ -15,8 +15,7 @@ from itertools import chain
 
 
 from cart.models import Cart, CartItem
-from store.models import FavoriteDeck, FavoriteSkateboard, FavoriteTruck
-
+from store.models import FavoriteItem
 
 def register(request):
 	if request.method == 'POST':
@@ -36,9 +35,9 @@ def register(request):
 		link = request.build_absolute_uri(reverse('user:activate', args=[uid, token]))
 
 		send_mail(
-			"Confirm your account",
-			f"Click the link to activate your account: {link}",
-			"noreply@example.com",
+			'Confirm your account',
+			f'Click the link to activate your account: {link}',
+			'noreply@example.com',
 			[email],
 		)
 
@@ -85,19 +84,12 @@ def activate(request, uidb64, token):
 def index(request):
 	cart, _ = Cart.objects.get_or_create(user=request.user)
 
-	favorites = sorted(
-		chain(
-			request.user.favorite_skateboards.through.objects.filter(user=request.user),
-			request.user.favorite_decks.through.objects.filter(user=request.user),
-			request.user.favorite_trucks.through.objects.filter(user=request.user),
-		),
-		key=lambda x: x.created_at,
-		reverse=True
-	)
+	favorites = FavoriteItem.objects.filter(user=request.user).select_related(
+'original_item', 'original_item__parent_brand').order_by('-created_at')[:8]
 
 	context = {
 		'cart_items': cart.items.all(),
-		'favorites': favorites[:8]
+		'favorites': favorites
 	}
 
 	return render(request, 'user/index.html', context)

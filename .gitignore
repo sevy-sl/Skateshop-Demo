@@ -1,0 +1,6 @@
+migrations
+db.sqlite3
+/media
+__pycache__
+/.env
+.DS_store
